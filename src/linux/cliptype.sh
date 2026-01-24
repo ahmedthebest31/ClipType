@@ -7,7 +7,7 @@
 #  Author: Ahmed Samy
 # ==============================================================================
 
-VERSION="3.2.0"
+VERSION="1.0.0"
 DELAY=50 # Default delay in milliseconds
 
 # --- Helper: Print Usage ---
