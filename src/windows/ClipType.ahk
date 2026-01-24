@@ -22,7 +22,7 @@ if (!A_IsAdmin) {
 
 ; --- Global Variables ---
 Global AppName := "ClipType"
-Global Version := "3.2"
+Global Version := "1.0"
 Global IniFile := A_ScriptDir . "\settings.ini"
 Global StopTyping := False
 Global IsPaused := False
