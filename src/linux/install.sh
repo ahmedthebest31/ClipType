@@ -2,7 +2,11 @@
 
 # ==============================================================================
 #  ClipType Installer for Linux
+#  Description: Installs the script to /usr/local/bin with correct permissions.
 # ==============================================================================
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
 
 SCRIPT_NAME="cliptype"
 INSTALL_DIR="/usr/local/bin"
@@ -10,21 +14,23 @@ SOURCE_FILE="./cliptype.sh"
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root (use sudo)."
+  echo "Error: Permission denied. Please run as root (use sudo)."
   exit 1
 fi
 
 # Check if source file exists
 if [ ! -f "$SOURCE_FILE" ]; then
-  echo "Error: $SOURCE_FILE not found!"
-  echo "Make sure you are in the correct directory."
+  echo "Error: Source file '$SOURCE_FILE' not found in the current directory."
   exit 1
 fi
 
-# Install
-echo "Installing $SCRIPT_NAME to $INSTALL_DIR..."
-cp "$SOURCE_FILE" "$INSTALL_DIR/$SCRIPT_NAME"
-chmod +x "$INSTALL_DIR/$SCRIPT_NAME"
+echo "Installing $SCRIPT_NAME..."
 
-echo "Success! You can now use '$SCRIPT_NAME' from anywhere."
-echo "Make sure to set a keyboard shortcut pointing to: $SCRIPT_NAME"
+# Create directory if it doesn't exist (Idempotent)
+mkdir -p "$INSTALL_DIR"
+
+# Install the file: copies it AND sets permissions (rwxr-xr-x) atomically
+install -m 755 "$SOURCE_FILE" "$INSTALL_DIR/$SCRIPT_NAME"
+
+echo "Success! '$SCRIPT_NAME' has been installed to $INSTALL_DIR"
+echo "You can now run it simply by typing: $SCRIPT_NAME"

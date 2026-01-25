@@ -1,2 +1,14 @@
-# Auto detect text files and perform LF normalization
+# Auto-detect text files and perform LF normalization
 * text=auto
+
+# Force LF for Linux shell scripts (critical for execution)
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Force LF for macOS AppleScripts
+*.applescript text eol=lf
+
+# Force CRLF for Windows specific files
+*.ahk text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf

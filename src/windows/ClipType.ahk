@@ -1,4 +1,10 @@
-﻿#Requires AutoHotkey v2.0
+﻿;@Ahk2Exe-SetName ClipType
+;@Ahk2Exe-SetDescription ClipType - Professional Clipboard Injector
+;@Ahk2Exe-SetVersion 1.0.0
+;@Ahk2Exe-SetCopyright Copyright (c) 2026 Ahmed Samy
+;@Ahk2Exe-SetCompanyName Ahmed Samy
+;@Ahk2Exe-SetOrigFilename ClipType.exe
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 #NoTrayIcon
 Persistent

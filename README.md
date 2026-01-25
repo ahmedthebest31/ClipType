@@ -12,6 +12,13 @@ Grab the ready-to-use version for your system from the Releases page:
 
 [**👉 Download Latest Release**](https://github.com/ahmedthebest31/ClipType/releases)
 
+### 📦 Install via Winget
+
+You can verify and install the official package directly from the command line:
+
+```powershell
+winget install AhmedSamy.ClipType
+
 ---
 
 ## 🚀 Why ClipType?
