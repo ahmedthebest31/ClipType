@@ -10,7 +10,7 @@
 **Don't want to deal with code?**
 Grab the ready-to-use version for your system from the Releases page:
 
-[**👉 Download Latest Release**](https://github.com/ahmedthebest31/ClipType/releases)
+[**👉 Download Latest Release**](https://github.com/ahmedthebest31/ClipType/releases/latest)
 
 ### 📦 Install via Winget
 
@@ -18,6 +18,7 @@ You can verify and install the official package directly from the command line:
 
 ```powershell
 winget install AhmedSamy.ClipType
+```
 
 ---
 
@@ -70,5 +71,5 @@ Please ensure you use **LF** line endings for Linux/macOS files and **UTF-8 with
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the [**MIT License**](/LICENSE).
 
