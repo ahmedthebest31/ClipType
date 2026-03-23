@@ -12,17 +12,15 @@ DELAY=50 # Default delay in milliseconds
 
 # --- Helper: Print Usage ---
 usage() {
-    echo "ClipType v$VERSION"
-    echo "Usage: $0 [options]"
-    echo ""
-    echo "Options:"
-    echo "  -d, --delay <ms>   Set typing delay in milliseconds (default: 50)"
-    echo "  -h, --help         Show this help message"
-    echo "  -v, --version      Show version info"
-    echo ""
-    echo "Examples:"
-    echo "  $0                 # Type clipboard content with default delay"
-    echo "  $0 -d 100          # Type slower (100ms delay)"
+    printf "ClipType v%s\n" "$VERSION"
+    printf "Usage: %s [options]\n\n" "$0"
+    printf "Options:\n"
+    printf "  -d, --delay <ms>    Set typing delay in milliseconds (default: 50)\n"
+    printf "  -h, --help          Show this help message\n"
+    printf "  -v, --version       Show version info\n\n"
+    printf "Examples:\n"
+    printf "  %s                  # Type clipboard content with default delay\n" "$0"
+    printf "  %s -d 100           # Type slower (100ms delay)\n" "$0"
     exit 0
 }
 
@@ -31,63 +29,54 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -d|--delay) DELAY="$2"; shift ;;
         -h|--help) usage ;;
-        -v|--version) echo "ClipType v$VERSION"; exit 0 ;;
-        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+        -v|--version) printf "ClipType v%s\n" "$VERSION"; exit 0 ;;
+        *) printf "Unknown parameter passed: %s\n" "$1"; exit 1 ;;
     esac
     shift
 done
 
 # --- Logic: Detect Session Type ---
-SESSION_TYPE=""
 if [ "$XDG_SESSION_TYPE" == "wayland" ]; then
     SESSION_TYPE="wayland"
 else
-    # Fallback to X11 if not explicitly Wayland
     SESSION_TYPE="x11"
 fi
 
 # --- Logic: Check Dependencies & Fetch Clipboard ---
-CLIP_CONTENT=""
-
 if [ "$SESSION_TYPE" == "wayland" ]; then
-    # === Wayland Path ===
     if ! command -v wl-paste &> /dev/null || ! command -v wtype &> /dev/null; then
-        echo "Error: Missing dependencies for Wayland."
-        echo "Please install: wl-clipboard and wtype"
-        echo "  Arch: sudo pacman -S wl-clipboard wtype"
-        echo "  Debian/Ubuntu: sudo apt install wl-clipboard (wtype might need manual install)"
+        printf "Error: Missing dependencies for Wayland.\n"
+        printf "Please install: wl-clipboard and wtype\n"
         exit 1
     fi
+    # Use raw output to preserve exact content
     CLIP_CONTENT=$(wl-paste --no-newline)
-
 else
-    # === X11 Path ===
     if ! command -v xclip &> /dev/null || ! command -v xdotool &> /dev/null; then
-        echo "Error: Missing dependencies for X11."
-        echo "Please install: xclip and xdotool"
-        echo "  Arch: sudo pacman -S xclip xdotool"
-        echo "  Debian/Ubuntu: sudo apt install xclip xdotool"
+        printf "Error: Missing dependencies for X11.\n"
+        printf "Please install: xclip and xdotool\n"
         exit 1
     fi
-    CLIP_CONTENT=$(xclip -selection clipboard -o)
+    # Use printf trick to prevent shell from stripping trailing newlines
+    CLIP_CONTENT=$(xclip -selection clipboard -o; printf "x")
+    CLIP_CONTENT=${CLIP_CONTENT%x}
 fi
 
 # --- Sanity Check ---
 if [ -z "$CLIP_CONTENT" ]; then
-    echo "Clipboard is empty."
+    printf "Clipboard is empty.\n"
     exit 0
 fi
 
 # --- Logic: Type it out! ---
-# Note: We use a small sleep to allow user to release keys if run via shortcut
+# Small safety delay to allow user to release keys
 sleep 0.2
 
 if [ "$SESSION_TYPE" == "wayland" ]; then
-    # wtype handles modification keys well
     wtype -d "$DELAY" "$CLIP_CONTENT"
 else
-    # xdotool needs --file - to handle special chars properly from stdin to avoid parsing issues
-    echo -n "$CLIP_CONTENT" | xdotool type --clearmodifiers --delay "$DELAY" --file -
+    # Use printf to pipe raw data to avoid echo's backslash interpretation
+    printf "%s" "$CLIP_CONTENT" | xdotool type --clearmodifiers --delay "$DELAY" --file -
 fi
 
 exit 0
