@@ -4,7 +4,7 @@ import Quartz
 
 // ==============================================================================
 //  ClipType - Professional Clipboard Injector (macOS Native Engine)
-//  Version: 1.0.0
+//  Version: 2.0.0
 //  Author: Ahmed Samy
 // ==============================================================================
 

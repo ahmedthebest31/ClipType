@@ -3,11 +3,11 @@
 # ==============================================================================
 #  ClipType - Professional Clipboard Injector (Linux Edition)
 #  Architecture: Multi-Backend (Wayland/X11)
-#  Version: 1.0.0
+#  Version: 2.0.0
 #  Author: Ahmed Samy
 # ==============================================================================
 
-VERSION="1.0.0"
+VERSION="2.0.0"
 DELAY=50
 MAX_DELAY=150
 USE_RANDOM=0

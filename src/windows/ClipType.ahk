@@ -1,6 +1,6 @@
-﻿;@Ahk2Exe-SetName ClipType
+;@Ahk2Exe-SetName ClipType
 ;@Ahk2Exe-SetDescription ClipType - Professional Clipboard Injector
-;@Ahk2Exe-SetVersion 1.0.0
+;@Ahk2Exe-SetVersion 2.0.0
 ;@Ahk2Exe-SetCopyright Copyright (c) 2026 Ahmed Samy
 ;@Ahk2Exe-SetCompanyName Ahmed Samy
 ;@Ahk2Exe-SetOrigFilename ClipType.exe
@@ -13,7 +13,7 @@ Persistent
 ;  Global Variables
 ; ==============================================================================
 Global AppName := "ClipType"
-Global Version := "3.5.0"
+Global Version := "2.0.0"
 Global IniFile := A_ScriptDir . "\settings.ini"
 Global StopTyping := False
 Global IsPaused := False
